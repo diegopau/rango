@@ -5,21 +5,26 @@
 {% block title %} About {% endblock %}
 
 {% block body_block %}
-    <h1>{{ category_name }}</h1>
-    {% if category %}
-        {% if pages %}
-        <ul>
-            {% for page in pages %}
-            <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-            {% endfor %}
-        </ul>
+    <div class="page-header">
+        <h1>{{ category_name }}</h1>
+    </div>
+
+    <div>
+        {% if category %}
+            {% if pages %}
+            <ul>
+                {% for page in pages %}
+                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>No pages currently in category.</strong>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'add_page' category_name_url%}">Add Page</a></li>
+            {% endif %}
         {% else %}
-            <strong>No pages currently in category.</strong>
+            The specified category {{ category_name }} does not exist!
         {% endif %}
-        {% if user.is_authenticated %}
-            <li><a href="{% url 'add_page' category_name_url%}">Add Page</a></li>
-        {% endif %}
-    {% else %}
-        The specified category {{ category_name }} does not exist!
-    {% endif %}
+    </div>
 {% endblock %}
